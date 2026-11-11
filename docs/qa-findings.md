@@ -2,25 +2,45 @@
 
 **Run date:** November 11, 2026
 
-**Browser:** Chromium, desktop viewport
+**Browser:** Chromium, desktop viewport; local MP4 sampled by seeking
 
 **Site:** Live Beshak.org
 
 ## What I checked
 
-I ran the Playwright suite against the article feed, video library, both plan directories, the HDFC Ergo product page, a health-plan comparison page, and the opening screen of each proposal form. All eight automated checks passed. I also selected plans in the health listing manually to inspect the comparison tray.
+I sampled the local 1:34 recording by seeking through it, and checked the visible browser content at each position. The clip shows a homepage, guide and article pages, plan directories and product details, plan comparison, then the video library and its player overlay. The player’s displayed time sometimes lagged after a seek; timestamps below are approximate and refer to the sought position, not a frame-accurate edit list.
 
-I could not play the Drive recording myself: the preview stayed on “Loading,” and its play control was disabled. I used the workflow breakdown included with the assignment as the requested scope, but I have not independently confirmed each step against the video.
+I also ran the Playwright suite against the article feed, video library, both plan directories, the HDFC Ergo product page, a static health-plan comparison URL, and both proposal form opening screens. All eight automated checks passed.
+
+## Walkthrough trace
+
+| Approx. position | Frame content |
+| --- | --- |
+| 00:01 | Beshak homepage and primary navigation. |
+| 00:14 | “Term Insurance for Housewives” guide page, with explanatory text and plan content below. |
+| 00:21 | “How Does Term Insurance Work?” term article. |
+| 00:28 | Health Insurance featured-articles feed. |
+| 00:35 | Article view titled “Why Does Beshak Recommend the Same 3 Health Insurance Plans?”; the Term menu is also shown open in a sampled frame. |
+| 00:42 | Best Term Life Insurance Plans of 2026 directory; TATA AIA Sampoorna Raksha Promise is visible with its Compare control. |
+| 00:49 | HDFC Ergo Optima Secure+ product page, with “Detailed Overview” selected. The other visible tabs are Introduction, Quick Overview, and FAQs. |
+| 00:56 | Health plan directory with Compare choices selected. |
+| 01:03 | Health comparison table with three plan columns, including product benefits and limits/exclusions. |
+| 01:07-01:11 | Comparison state with an “Add product to compare” slot. |
+| 01:13 | Centered “Add To Compare” dialog with plan choices, plus/minus controls, and a Compare button. |
+| 01:15-01:17 | Comparison table continues with three plan columns, followed by similar-plan comparisons. |
+| 01:24-01:31 | Health Videos page. A thumbnail opens a centered overlay with an X and embedded player; the underlying video cards remain visible. |
+
+The comparison modal is a state reached from the plan-selection journey in the video. Opening a static comparison URL directly in the browser shows a two-plan comparison and similar-plan links, but does not show the add-product slot. The automated test currently covers that static route; it does not yet recreate the stateful route shown in the recording.
 
 ## Findings
 
 | ID | Priority | Status | What I observed |
 | --- | --- | --- | --- |
-| BUG-01 | P2 | Reproduced | Selecting two plans displays “Add 1 more plan to compare.” Selecting another shows “Can not add more than 2 products!” The page invites a third selection and then refuses it. The assignment walkthrough says a third plan is added later, so the expected behavior needs clarification. |
 | OBS-01 | Informational | Confirm against recording | Form 1 opens with six progress stages and basic proposer details. Form 2 opens with four stages and extra fields: parents’ names, height, weight, place of birth, and political-exposure/COVID questions. I did not treat the difference as a bug because the two links appear to represent different form variants. |
 | OBS-02 | Low | Unconfirmed accessibility concern | In the Form 2 accessibility snapshot, the Education textbox name appeared as “Education Education”; Form 1 showed “Education.” This needs checking with the rendered accessibility tree or a screen reader before filing as a defect. |
-| OBS-03 | Needs confirmation | Not reproduced | The supplied breakdown mentions an “Add product to compare” modal. The comparison page I reached showed two plans and comparison sections, plus links to similar comparisons; I did not find that modal in this route. It may belong to another entry point or a different version of the site. |
-| BLOCK-01 | Blocking | Open | Drive playback was unavailable during my review. I need a working link or access permission to verify the video’s exact page sequence and expected results. |
+| OBS-03 | Informational | Confirmed in recording | The comparison page's “Add product to compare” tile opens a centered “Add To Compare” dialog with plan options, plus/minus controls, and a Compare button. After a selection, the clip shows a three-plan table. |
+| OBS-04 | Informational | Confirmed in recording | A video thumbnail opens a centered overlay with an X close control and embedded player. The underlying Health Videos page remains visible. |
+| OBS-05 | Informational | Manual listing observation | The plan-listing tray enforces its own selection limit. The recording proceeds from the listing into a comparison page before adding another plan, so this listing limit alone is not being reported as a defect. |
 
 The form pages also logged a generic 403 resource error and a duplicate Meta Pixel ID warning in the browser console. I did not see a user-facing failure tied to either message, so I have not logged them as bugs.
 
@@ -33,7 +53,7 @@ The tests verify that:
 - The article feed, term/health directories, HDFC product overview tabs, and a two-plan comparison page render.
 - Clicking a featured video opens an iframe dialog without navigating away from the Videos page.
 
-The form checks stop at the initial screen. They do not input personal information, click Continue, upload a file, or submit either proposal. Tests also avoid “Discuss with expert” and “Book a consultation.” The manual comparison-tray check is not yet automated because the listing uses duplicate responsive controls.
+The form checks stop at the initial screen. They do not input personal information, click Continue, upload a file, or submit either proposal. Tests also avoid “Discuss with expert” and “Book a consultation.” The test suite checks a static comparison URL; it does not yet reproduce the stateful comparison journey or open the comparison add-plan dialog.
 
 ## Form cases still to run
 
@@ -53,10 +73,10 @@ These are proposed checks, not observed defects. Run them with synthetic data in
 
 ## Next steps
 
-1. Ask Karan to clarify the three-plan flow versus the live two-plan cap and, if possible, provide access to the walkthrough.
-2. Verify the article and guide routes named in the recording; this run checked the article feed, not every linked article.
+1. Recreate the stateful comparison journey from the health directory through “Compare Now,” then automate the add-plan dialog seen in the recording.
+2. Verify the guide/article links and expected menu behavior against the named pages in the recording; this run sampled their visible states, not every link or hover.
 3. Use an approved test identity or staging site before exercising form navigation and uploads.
-4. Automate the remaining form branches and comparison selection once the expected behavior is confirmed.
+4. Automate form validation branches and uploads after expected rules are confirmed.
 5. Check the Form 2 Education accessible name with assistive technology before deciding whether OBS-02 is a defect.
 
 ## Result

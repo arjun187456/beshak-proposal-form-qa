@@ -29,6 +29,6 @@ For a visible browser, run `npm run test:headed`.
 
 The form tests only inspect visible fields. They do not enter data, click Continue, upload files, or submit proposals. No test clicks “Discuss with expert” or “Book a consultation.” The site tests open a video dialog and read a static comparison page; they do not finish the comparison tray flow.
 
-This is smoke coverage, not an end-to-end test. Drive playback was unavailable during review, and later form steps have not been tested. Use an approved test identity or staging environment before progressing live forms. The comparison tray’s two-plan limit and contradictory prompt are described in the findings document.
+This is smoke coverage, not an end-to-end test. The local walkthrough was sampled, but later form steps have not been tested. Use an approved test identity or staging environment before progressing live forms. The report distinguishes the static comparison URL covered by automation from the stateful add-product dialog shown in the recording.
 
 The tests depend on the public pages being reachable and their accessible names remaining stable. They make no backend or persistence assertions.
