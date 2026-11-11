@@ -59,6 +59,8 @@ The manual screenshots in the Word log show Form 2 through Proposer Details, KYC
 
 These are proposed checks, not observed defects. Run them with synthetic data in staging or with an approved test identity.
 
+Screenshot-derived Form 1 cases, including the review summary, upload step, and Insured Member Details screen, are listed in [form1-test-cases.md](form1-test-cases.md). The screenshot shows a required error for the unanswered “Is the proposer same as insured member?” question; the other expected behaviors in that checklist still need execution.
+
 | Form | Try | Check |
 | --- | --- | --- |
 | Both | Leave starred fields blank or enter spaces for a name | Error appears beside the relevant field; the step does not advance |
