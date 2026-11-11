@@ -23,7 +23,6 @@ For a visible browser, run `npm run test:headed`.
 - `tests/proposal-forms.spec.js` checks the initial screen of each form.
 - `tests/site-workflows.spec.js` checks article/video pages, plan directories, product details, and a comparison page.
 - `docs/qa-findings.md` contains observations from the November 11 run, test limits, and cases still to test.
-- `docs/email-acknowledgment.md` is an unsent email draft asking for working video access.
 
 ## Current coverage and safety boundary
 
