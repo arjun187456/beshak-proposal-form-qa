@@ -53,7 +53,7 @@ The tests verify that:
 - The article feed, term/health directories, HDFC product overview tabs, and a two-plan comparison page render.
 - Clicking a featured video opens an iframe dialog without navigating away from the Videos page.
 
-The form checks stop at the initial screen. They do not input personal information, click Continue, upload a file, or submit either proposal. Tests also avoid “Discuss with expert” and “Book a consultation.” The test suite checks a static comparison URL; it does not yet reproduce the stateful comparison journey or open the comparison add-plan dialog.
+The manual screenshots in the Word log show Form 2 through Proposer Details, KYC Information, Nominee Details, and the Upload Documents declaration. A later automated navigation to that same URL displayed “Proposal submitted successfully,” so the opening-screen check now skips rather than replaying it. An opt-in Form 2 journey is implemented but was not run; with a fresh approved URL it uses synthetic values and the dummy PDF, then stops at Upload Documents before Submit. No test interacts with “Discuss with expert” or “Book a consultation.” The comparison test checks a static URL and does not yet reproduce the stateful add-plan dialog.
 
 ## Form cases still to run
 
@@ -73,12 +73,13 @@ These are proposed checks, not observed defects. Run them with synthetic data in
 
 ## Next steps
 
-1. Recreate the stateful comparison journey from the health directory through “Compare Now,” then automate the add-plan dialog seen in the recording.
-2. Verify the guide/article links and expected menu behavior against the named pages in the recording; this run sampled their visible states, not every link or hover.
-3. Use an approved test identity or staging site before exercising form navigation and uploads.
-4. Automate form validation branches and uploads after expected rules are confirmed.
-5. Check the Form 2 Education accessible name with assistive technology before deciding whether OBS-02 is a defect.
+1. Get a fresh approved Form 2 test URL before running the opt-in journey; the current link is already submitted.
+2. Recreate the stateful comparison journey from the health directory through “Compare Now,” then automate the add-plan dialog seen in the recording.
+3. Verify the guide/article links and expected menu behavior against the named pages in the recording; this run sampled their visible states, not every link or hover.
+4. Use an approved test identity or staging site before exercising form navigation and uploads.
+5. Automate form validation branches and uploads after expected rules are confirmed.
+6. Check the Form 2 Education accessible name with assistive technology before deciding whether OBS-02 is a defect.
 
 ## Result
 
-`npm test` passed **8 of 8 tests** in Chromium on November 11, 2026. Passing indicates the tested page elements rendered; it does not mean either proposal form was completed end to end.
+Latest `npm test` run: **7 passed, 2 skipped** in Chromium. The Form 2 opening-screen check skipped because the public link shows a submission-success state; the opt-in multi-step journey also skipped because its environment gate was unset. Passing the default suite does not mean either proposal form was completed end to end.
