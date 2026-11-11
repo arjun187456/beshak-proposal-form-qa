@@ -1,6 +1,6 @@
-# Beshak Proposal Form QA
+# Beshak Site QA
 
-Playwright smoke tests for Beshak content, plan pages, the comparison view, video modal, and two proposal form variants.
+Small Playwright suite for the public Beshak site and the two proposal form entry screens. The suite currently checks eight read-only page journeys; it does not complete either application.
 
 ## Requirements
 
@@ -17,18 +17,18 @@ npm test
 
 For a visible browser, run `npm run test:headed`.
 
-## Layout
+## Project files
 
-- `pages/` contains page objects for navigation, content, plan listings, comparison, and proposal forms.
-- `tests/proposal-forms.spec.js` checks the initial state of both forms.
-- `tests/site-workflows.spec.js` checks article/video pages, plan directories, plan details, and a comparison page.
-- `docs/qa-findings.md` records observations, form edge cases, limitations, and the broader test strategy.
-- `docs/email-acknowledgment.md` is a draft response about the inaccessible walkthrough.
+- `pages/` contains page objects for site navigation, content, plan listings, comparison pages, and proposal forms.
+- `tests/proposal-forms.spec.js` checks the initial screen of each form.
+- `tests/site-workflows.spec.js` checks article/video pages, plan directories, product details, and a comparison page.
+- `docs/qa-findings.md` contains observations from the November 11 run, test limits, and cases still to test.
+- `docs/email-acknowledgment.md` is an unsent email draft asking for working video access.
 
 ## Current coverage and safety boundary
 
-The proposal tests navigate to the live form URLs and verify the proposer heading, visible controls, and form-specific fields. They do not enter personal data, click Continue, upload documents, or submit a proposal. No test interacts with “Discuss with expert” or “Book a consultation.” Site smoke tests exercise content routes, the video dialog, and a static comparison page. The comparison tray observation is documented in the QA report.
+The form tests only inspect visible fields. They do not enter data, click Continue, upload files, or submit proposals. No test clicks “Discuss with expert” or “Book a consultation.” The site tests open a video dialog and read a static comparison page; they do not finish the comparison tray flow.
 
-This is smoke coverage, not full end-to-end coverage. Drive playback remained unavailable during direct review; the supplied walkthrough breakdown informed the page scope, but later form steps remain untested. Do not advance or submit live forms without an agreed test identity and safe staging environment. The comparison tray's two-plan limit/copy mismatch is recorded for triage.
+This is smoke coverage, not an end-to-end test. Drive playback was unavailable during review, and later form steps have not been tested. Use an approved test identity or staging environment before progressing live forms. The comparison tray’s two-plan limit and contradictory prompt are described in the findings document.
 
 The tests depend on the public pages being reachable and their accessible names remaining stable. They make no backend or persistence assertions.

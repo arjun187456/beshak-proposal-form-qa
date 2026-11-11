@@ -4,9 +4,7 @@
 
 Dear Karan,
 
-Thank you for inviting me to the practical assignment. I have received the instructions and reviewed both form links. I am currently unable to review the walkthrough because the Google Drive player remains in a loading state and playback is disabled on my side. Could you please share an alternate link or enable access?
-
-I will proceed with the accessible form checks and automation scope, and will share any further questions as I work through the flows.
+Thanks for sharing the assignment. I checked both proposal links and started the Playwright suite. I could not play the Drive walkthrough: the preview stayed on “Loading” and its play control was disabled. Could you send another link or enable access? I want to confirm the expected flow, especially the plan-comparison step, before I report that part as complete.
 
 Regards,
 
